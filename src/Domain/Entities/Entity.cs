@@ -2,7 +2,7 @@ using System;
 
 namespace Domain.Entities
 {
-    public abstract class Entity
+    public class Entity
     {
         public Guid Id { get; set; }
         public DateTime CreatedAt { get; set; }
