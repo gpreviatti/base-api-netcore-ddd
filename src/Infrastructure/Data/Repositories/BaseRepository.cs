@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories
 {
-    public abstract class BaseRepository<T> : IBaseRepository<T> where T : Entity
+    public class BaseRepository<T> : IBaseRepository<T> where T : Entity
     {
         protected readonly MyContext _context;
         private DbSet<T> _dataset;

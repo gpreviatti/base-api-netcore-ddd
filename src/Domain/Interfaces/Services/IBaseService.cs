@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
 namespace Domain.Interfaces.Services
 {
-    public interface IBaseService<Entity>
+    public interface IBaseService
     {
     }
 }

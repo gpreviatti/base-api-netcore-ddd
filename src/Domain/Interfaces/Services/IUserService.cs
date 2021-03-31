@@ -5,7 +5,7 @@ using Domain.Entities;
 
 namespace Domain.Interfaces.Services
 {
-    public interface IUserService : IBaseService<User>
+    public interface IUserService : IBaseService
     {
         Task<User> FindByIdAsync(Guid id);
         Task<IEnumerable<User>> FindAllAsync();

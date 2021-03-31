@@ -5,13 +5,13 @@ using Domain.Entities;
 
 namespace Domain.Interfaces.Repositories
 {
-    public interface IBaseRepository<Entity>
+    public interface IBaseRepository<T> where T : Entity
     {
-        Task<Entity> CreateAsync(Entity entity);
-        Task<Entity> UpdateAsync(Entity entity);
+        Task<T> CreateAsync(T entity);
+        Task<T> UpdateAsync(T entity);
         Task<bool> DeleteAsync(Guid id);
-        Task<Entity> FindByIdAsync(Guid id);
-        Task<IEnumerable<Entity>> FindAllAsync();
+        Task<T> FindByIdAsync(Guid id);
+        Task<IEnumerable<T>> FindAllAsync();
         Task<bool> ExistAsync(Guid id);
     }
 }
