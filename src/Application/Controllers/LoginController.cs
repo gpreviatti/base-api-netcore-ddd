@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Domain.Dtos.User;
 using Domain.Entities;
 using Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -8,12 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace Application.Controllers
 {
     [ApiController]
-    [Route("users")]
-    public class UserController : DefaultController
+    [Route("login")]
+    public class LoginController : DefaultController
     {
-        IUserService _service;
+        ILoginService _service;
 
-        public UserController(IUserService service)
+        public LoginController(ILoginService service)
         {
             _service = service;
         }
@@ -30,14 +29,14 @@ namespace Application.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] UserCreateDto userDto)
+        public async Task<ActionResult> Post([FromBody] User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var result = await _service.CreateAsync(userDto);
+            var result = await _service.CreateAsync(user);
             if (result.Email != null || result.Name != null)
             {
                 return Created("/users", result);
@@ -46,28 +45,6 @@ namespace Application.Controllers
             {
                 return BadRequest("Fail to create User");
             }
-        }
-
-        [HttpPut]
-        public async Task<ActionResult> Put([FromBody] User user)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            return Ok(await _service.UpdateAsync(user));
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(Guid id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            return Ok(await _service.DeleteAsync(id));
         }
     }
 }

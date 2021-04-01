@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Domain.Dtos.User;
 using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Services;
-using BC = BCrypt.Net.BCrypt;
+using Helpers;
 
 namespace Service.Services
 {
@@ -43,13 +44,18 @@ namespace Service.Services
             }
         }
 
-        public async Task<User> CreateAsync(User user)
+        public async Task<User> CreateAsync(UserCreateDto userDto)
         {
             try
             {
-                // bool verified = BC.Verify("Pa$$w0rd", passwordHash);
-                user.Password = BC.HashPassword(user.Password);
-                return await _repository.CreateAsync(user);
+                return await _repository
+                .CreateAsync(new User()
+                {
+                    Name = userDto.Name,
+                    Email = userDto.Email,
+                    Password = EncryptHelper.HashField(userDto.Password),
+                }
+                );
             }
             catch (Exception exception)
             {
@@ -62,6 +68,7 @@ namespace Service.Services
         {
             try
             {
+
                 return await _repository.UpdateAsync(user);
             }
             catch (Exception exception)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Domain.Dtos.User;
 using Domain.Entities;
 
 namespace Domain.Interfaces.Services
@@ -9,7 +10,7 @@ namespace Domain.Interfaces.Services
     {
         Task<User> FindByIdAsync(Guid id);
         Task<IEnumerable<User>> FindAllAsync();
-        Task<User> CreateAsync(User entity);
+        Task<User> CreateAsync(UserCreateDto entity);
         Task<User> UpdateAsync(User entity);
         Task<bool> DeleteAsync(Guid id);
     }
