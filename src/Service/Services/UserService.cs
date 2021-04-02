@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Domain.Dtos.User;
 using Domain.Entities;
 using Domain.Interfaces.Repositories;
@@ -11,70 +12,75 @@ namespace Service.Services
 {
     public class UserService : BaseService, IUserService
     {
-        private IUserRepository _repository;
+        private readonly IUserRepository _repository;
+        private readonly IMapper _mapper;
 
-        public UserService(IUserRepository repository)
+        public UserService(IUserRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
-        public async Task<User> FindByIdAsync(Guid id)
+        public async Task<UserResultDto> FindByIdAsync(Guid id)
         {
             try
             {
-                return await _repository.FindByIdAsync(id);
+                var result = await _repository.FindByIdAsync(id);
+                return _mapper.Map<UserResultDto>(result);
             }
             catch (Exception exception)
             {
                 System.Console.WriteLine(exception);
-                return new User();
+                return new UserResultDto();
             }
         }
 
-        public async Task<IEnumerable<User>> FindAllAsync()
+        public async Task<IEnumerable<UserResultDto>> FindAllAsync()
         {
             try
             {
-                return await _repository.FindAllAsync();
+                var result = await _repository.FindAllAsync();
+                return _mapper.Map<IEnumerable<UserResultDto>>(result);
             }
             catch (Exception exception)
             {
                 System.Console.WriteLine(exception);
-                return new List<User>();
+                return new List<UserResultDto>();
             }
         }
 
-        public async Task<User> CreateAsync(UserCreateDto userDto)
+        public async Task<UserResultDto> CreateAsync(UserCreateDto userDto)
         {
             try
             {
-                return await _repository
-                .CreateAsync(new User()
-                {
-                    Name = userDto.Name,
-                    Email = userDto.Email,
-                    Password = EncryptHelper.HashField(userDto.Password),
-                }
-                );
+                var user = _mapper.Map<User>(userDto);
+                user.Id = new Guid();
+                user.Password = EncryptHelper.HashField(user.Password);
+
+                var result = await _repository.CreateAsync(user);
+                return _mapper.Map<UserResultDto>(user);
             }
             catch (Exception exception)
             {
                 System.Console.WriteLine(exception);
-                return new User();
+                return new UserResultDto();
             }
         }
 
-        public async Task<User> UpdateAsync(User user)
+        public async Task<UserResultDto> UpdateAsync(UserUpdateDto userUpdateDto)
         {
             try
             {
+                var user = _mapper.Map<User>(userUpdateDto);
+                user.UpdatedAt = DateTime.Now;
 
-                return await _repository.UpdateAsync(user);
+                var updatedUser = await _repository.UpdateAsync(user);
+                return _mapper.Map<UserResultDto>(updatedUser);
             }
             catch (Exception exception)
             {
                 System.Console.WriteLine(exception);
-                return new User();
+                return new UserResultDto();
             }
         }
 

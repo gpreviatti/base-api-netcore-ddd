@@ -25,7 +25,7 @@ namespace Application.Controllers
                 return BadRequest(ModelState);
             }
 
-            return Ok(await _service.FindAllAsync());
+            return Ok();
         }
 
         [HttpPost]
@@ -36,15 +36,7 @@ namespace Application.Controllers
                 return BadRequest(ModelState);
             }
 
-            var result = await _service.CreateAsync(user);
-            if (result.Email != null || result.Name != null)
-            {
-                return Created("/users", result);
-            }
-            else
-            {
-                return BadRequest("Fail to create User");
-            }
+            return Ok();
         }
     }
 }

@@ -8,10 +8,10 @@ namespace Domain.Interfaces.Services
 {
     public interface IUserService : IBaseService
     {
-        Task<User> FindByIdAsync(Guid id);
-        Task<IEnumerable<User>> FindAllAsync();
-        Task<User> CreateAsync(UserCreateDto entity);
-        Task<User> UpdateAsync(User entity);
+        Task<UserResultDto> FindByIdAsync(Guid id);
+        Task<IEnumerable<UserResultDto>> FindAllAsync();
+        Task<UserResultDto> CreateAsync(UserCreateDto entity);
+        Task<UserResultDto> UpdateAsync(UserUpdateDto entity);
         Task<bool> DeleteAsync(Guid id);
     }
 }
