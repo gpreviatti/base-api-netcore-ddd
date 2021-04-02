@@ -54,7 +54,6 @@ namespace Service.Services
             try
             {
                 var user = _mapper.Map<User>(userDto);
-                user.Id = new Guid();
                 user.Password = EncryptHelper.HashField(user.Password);
 
                 var result = await _repository.CreateAsync(user);
@@ -72,7 +71,6 @@ namespace Service.Services
             try
             {
                 var user = _mapper.Map<User>(userUpdateDto);
-                user.UpdatedAt = DateTime.Now;
 
                 var updatedUser = await _repository.UpdateAsync(user);
                 return _mapper.Map<UserResultDto>(updatedUser);
