@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Domain.Dtos.User;
 using Domain.Entities;
 using Domain.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers
 {
     [ApiController]
+    [Authorize("Bearer")]
     [Route("users")]
     public class UserController : DefaultController
     {
@@ -29,14 +32,14 @@ namespace Application.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] User user)
+        public async Task<ActionResult> Post([FromBody] UserCreateDto userCreateDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var result = await _service.CreateAsync(user);
+            var result = await _service.CreateAsync(userCreateDto);
             if (result.Email != null || result.Name != null)
             {
                 return Created("/users", result);
@@ -48,14 +51,14 @@ namespace Application.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put([FromBody] User user)
+        public async Task<ActionResult> Put([FromBody] UserUpdateDto userUpdateDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            return Ok(await _service.UpdateAsync(user));
+            return Ok(await _service.UpdateAsync(userUpdateDto));
         }
 
         [HttpDelete("{id}")]
