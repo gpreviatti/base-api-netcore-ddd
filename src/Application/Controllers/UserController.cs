@@ -3,11 +3,13 @@ using System.Threading.Tasks;
 using Domain.Dtos.User;
 using Domain.Entities;
 using Domain.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers
 {
     [ApiController]
+    [Authorize("Bearer")]
     [Route("users")]
     public class UserController : DefaultController
     {

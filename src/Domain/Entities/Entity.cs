@@ -6,7 +6,7 @@ namespace Domain.Entities
     {
         public Entity()
         {
-            if (Id == null)
+            if (UpdatedAt.Equals(null) && CreatedAt.Equals(null))
             {
                 Id = new Guid();
                 CreatedAt = UpdatedAt = DateTime.Now;

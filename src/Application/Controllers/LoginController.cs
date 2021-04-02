@@ -1,12 +1,13 @@
-﻿using System;
-using System.Threading.Tasks;
-using Domain.Entities;
+﻿using System.Threading.Tasks;
+using Domain.Dtos;
 using Domain.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers
 {
     [ApiController]
+    [AllowAnonymous]
     [Route("login")]
     public class LoginController : DefaultController
     {
@@ -17,26 +18,20 @@ namespace Application.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        public async Task<ActionResult> Get()
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            return Ok();
-        }
-
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] User user)
+        public async Task<ActionResult> Post([FromBody] LoginDto loginDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            return Ok();
+            var result = await _service.Login(loginDto);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
         }
     }
 }
