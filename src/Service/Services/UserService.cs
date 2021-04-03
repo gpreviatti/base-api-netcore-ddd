@@ -21,17 +21,17 @@ namespace Service.Services
             _mapper = mapper;
         }
 
-        public async Task<UserResultDto> FindByIdAsync(Guid id)
+        public async Task<UserResultDto> FindByIdAsync(Guid Id)
         {
             try
             {
-                var result = await _repository.FindByIdAsync(id);
+                var result = await _repository.FindByIdAsync(Id);
                 return _mapper.Map<UserResultDto>(result);
             }
             catch (Exception exception)
             {
                 System.Console.WriteLine(exception);
-                return new UserResultDto();
+                return null;
             }
         }
 
@@ -45,7 +45,7 @@ namespace Service.Services
             catch (Exception exception)
             {
                 System.Console.WriteLine(exception);
-                return new List<UserResultDto>();
+                return null;
             }
         }
 
@@ -62,7 +62,7 @@ namespace Service.Services
             catch (Exception exception)
             {
                 System.Console.WriteLine(exception);
-                return new UserResultDto();
+                return null;
             }
         }
 
@@ -71,22 +71,21 @@ namespace Service.Services
             try
             {
                 var user = _mapper.Map<User>(userUpdateDto);
-
                 var updatedUser = await _repository.UpdateAsync(user);
                 return _mapper.Map<UserResultDto>(updatedUser);
             }
             catch (Exception exception)
             {
                 System.Console.WriteLine(exception);
-                return new UserResultDto();
+                return null;
             }
         }
 
-        public async Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid Id)
         {
             try
             {
-                return await _repository.DeleteAsync(id);
+                return await _repository.DeleteAsync(Id);
             }
             catch (Exception exception)
             {

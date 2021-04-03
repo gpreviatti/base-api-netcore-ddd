@@ -10,11 +10,11 @@ namespace Data.Context
             var optionsBuilder = new DbContextOptionsBuilder<MyContext>();
 
             //MySql
-            var connectionString = "Server=localhost;Port=3306;Database=dbAPI;Uid=application;Pwd=application";
+            var connectionString = "Server=localhost;Port=3306;Database=BaseApi;Uid=application;Pwd=application";
             optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 
             //SQLServer
-            // var connectionString = "Server=.\\SQLEXPRESS2017;Database=dbAPI;User Id=sa;Password=mudar@123";
+            // var connectionString = "Server=.\\SQLEXPRESS2017;Database=BaseApi;User Id=sa;Password=mudar@123";
             // optionsBuilder.UseSqlServer(connectionString);
 
             return new MyContext(optionsBuilder.Options);

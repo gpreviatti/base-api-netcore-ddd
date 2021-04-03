@@ -9,9 +9,8 @@ namespace Domain.Interfaces.Repositories
     {
         Task<T> CreateAsync(T entity);
         Task<T> UpdateAsync(T entity);
-        Task<bool> DeleteAsync(Guid id);
-        Task<T> FindByIdAsync(Guid id);
+        Task<bool> DeleteAsync(Guid Id);
+        Task<T> FindByIdAsync(Guid Id);
         Task<IEnumerable<T>> FindAllAsync();
-        Task<bool> ExistAsync(Guid id);
     }
 }

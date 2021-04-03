@@ -25,7 +25,7 @@ namespace Data.Repositories
                 item.Id = Guid.NewGuid();
             }
 
-            item.CreatedAt = DateTime.UtcNow;
+            item.CreatedAt = DateTime.Now;
             _dataset.Add(item);
 
             await _context.SaveChangesAsync();
@@ -33,14 +33,9 @@ namespace Data.Repositories
             return item;
         }
 
-        public async Task<bool> ExistAsync(Guid id)
+        public async Task<T> FindByIdAsync(Guid Guid)
         {
-            return await _dataset.AnyAsync(p => p.Id.Equals(id));
-        }
-
-        public async Task<T> FindByIdAsync(Guid id)
-        {
-            return await _dataset.SingleOrDefaultAsync(p => p.Id.Equals(id));
+            return await _dataset.SingleOrDefaultAsync(p => p.Id.Equals(Guid));
         }
 
         public async Task<IEnumerable<T>> FindAllAsync()
@@ -50,23 +45,27 @@ namespace Data.Repositories
 
         public async Task<T> UpdateAsync(T item)
         {
-            var result = await _dataset.SingleOrDefaultAsync(p => p.Id.Equals(item.Id));
+            var result = await FindByIdAsync(item.Id);
             if (result == null)
+            {
                 return null;
+            }
 
-            item.UpdatedAt = DateTime.UtcNow;
-            item.CreatedAt = result.CreatedAt;
+            item.CreatedAt = item.CreatedAt;
+            item.UpdatedAt = DateTime.Now;
 
             _context.Entry(result).CurrentValues.SetValues(item);
             await _context.SaveChangesAsync();
             return item;
         }
 
-        public async Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid Id)
         {
-            var result = await _dataset.SingleOrDefaultAsync(p => p.Id.Equals(id));
+            var result = await _dataset.SingleOrDefaultAsync(p => p.Id.Equals(Id));
             if (result == null)
+            {
                 return false;
+            }
 
             _dataset.Remove(result);
             await _context.SaveChangesAsync();

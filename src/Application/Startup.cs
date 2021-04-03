@@ -1,3 +1,4 @@
+using System;
 using CrossCutting.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,7 +38,13 @@ namespace Application
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Application v1"));
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Application v1");
+
+                    // Define Swagger as a default page of API
+                    c.RoutePrefix = String.Empty;
+                });
             }
 
             app.UseHttpsRedirection();

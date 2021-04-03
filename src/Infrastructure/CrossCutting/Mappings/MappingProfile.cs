@@ -10,7 +10,7 @@ namespace CrossCutting.Mappings
         {
             // User
             CreateMap<UserCreateDto, User>();
-            CreateMap<UserCreateDto, User>();
+            CreateMap<UserUpdateDto, User>();
             CreateMap<User, UserResultDto>().ReverseMap();
         }
     }

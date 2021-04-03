@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Domain.Dtos.User;
-using Domain.Entities;
 using Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -40,14 +39,12 @@ namespace Application.Controllers
             }
 
             var result = await _service.CreateAsync(userCreateDto);
-            if (result.Email != null || result.Name != null)
+            if (result == null)
             {
-                return Created("/users", result);
+                return BadRequest("Fail to create User");   
             }
-            else
-            {
-                return BadRequest("Fail to create User");
-            }
+
+            return Created("/users", result);
         }
 
         [HttpPut]
@@ -58,18 +55,31 @@ namespace Application.Controllers
                 return BadRequest(ModelState);
             }
 
-            return Ok(await _service.UpdateAsync(userUpdateDto));
+            var result = await _service.UpdateAsync(userUpdateDto);
+
+            if (result == null)
+            {
+                return BadRequest("Fail to update User");
+            }
+
+            return Ok(result);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(Guid id)
+        [HttpDelete("{Id}")]
+        public async Task<ActionResult> Delete(Guid Id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            return Ok(await _service.DeleteAsync(id));
+            var result = await _service.DeleteAsync(Id);
+            if (result == false)
+            {
+                return BadRequest("Fail to delete User");
+            }
+
+            return Ok("User deleted with success");
         }
     }
 }

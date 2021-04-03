@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20210328132940_create_users_table")]
+    [Migration("20210403143002_create_users_table")]
     partial class create_users_table
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,7 @@ namespace Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasMaxLength(36)
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -51,6 +52,17 @@ namespace Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("37e4f662-1987-4b9d-b245-ad6014f3217a"),
+                            CreatedAt = new DateTime(2021, 4, 3, 11, 30, 1, 52, DateTimeKind.Local).AddTicks(5621),
+                            Email = "admin@admin.com",
+                            Name = "Admin",
+                            Password = "$2a$11$bZv7JwIEMN5roD/EKTUMLO.T7t7N2Yo5/yNhOvrVd8PePZsNbLKNG",
+                            UpdatedAt = new DateTime(2021, 4, 3, 11, 30, 1, 52, DateTimeKind.Local).AddTicks(8064)
+                        });
                 });
 #pragma warning restore 612, 618
         }
