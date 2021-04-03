@@ -14,15 +14,15 @@ namespace CrossCutting.DependencyInjection
 
 
             // MySql
-            var connectionString = "Server=localhost;Port=3306;Database=dbAPI;Uid=application;Pwd=application";
-            serviceCollection.AddDbContext<MyContext>(
-                options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
-            );
+            // var connectionString = "Server=localhost;Port=3306;Database=dbAPI;Uid=application;Pwd=application";
+            // serviceCollection.AddDbContext<MyContext>(
+            //     options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
+            // );
 
             // SqlServer
-            // serviceCollection.AddDbContext<MyContext>(
-            //     options => options.UseSqlServer("Server=.\\SQLEXPRESS2017;Database=dbAPI;User Id=sa;Password=mudar@123")
-            // );
+            serviceCollection.AddDbContext<MyContext>(
+                options => options.UseSqlServer("Server=DESKTOP-CJHGFFK;Database=BaseApi;User Id=application;Password=application")
+            );
         }
     }
 }

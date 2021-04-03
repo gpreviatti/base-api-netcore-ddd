@@ -3,6 +3,7 @@ using System;
 using Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
@@ -14,35 +15,36 @@ namespace Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 64)
-                .HasAnnotation("ProductVersion", "5.0.4");
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("ProductVersion", "5.0.4")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(36)
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(60)
-                        .HasColumnType("varchar(60) CHARACTER SET utf8mb4");
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -55,11 +57,11 @@ namespace Data.Migrations
                         new
                         {
                             Id = new Guid("37e4f662-1987-4b9d-b245-ad6014f3217a"),
-                            CreatedAt = new DateTime(2021, 4, 3, 11, 30, 1, 52, DateTimeKind.Local).AddTicks(5621),
+                            CreatedAt = new DateTime(2021, 4, 3, 12, 18, 5, 948, DateTimeKind.Local).AddTicks(7906),
                             Email = "admin@admin.com",
                             Name = "Admin",
-                            Password = "$2a$11$bZv7JwIEMN5roD/EKTUMLO.T7t7N2Yo5/yNhOvrVd8PePZsNbLKNG",
-                            UpdatedAt = new DateTime(2021, 4, 3, 11, 30, 1, 52, DateTimeKind.Local).AddTicks(8064)
+                            Password = "$2a$11$3cw5mScRXUzYViR7yImcv.pHg7YIbKWYhbHHF1hQwONdX5XBve9Sa",
+                            UpdatedAt = new DateTime(2021, 4, 3, 12, 18, 5, 949, DateTimeKind.Local).AddTicks(9449)
                         });
                 });
 #pragma warning restore 612, 618

@@ -45,16 +45,10 @@ namespace Data.Repositories
 
         public async Task<T> UpdateAsync(T item)
         {
-            var result = await FindByIdAsync(item.Id);
-            if (result == null)
-            {
-                return null;
-            }
-
             item.CreatedAt = item.CreatedAt;
             item.UpdatedAt = DateTime.Now;
 
-            _context.Entry(result).CurrentValues.SetValues(item);
+            _context.Entry(item).CurrentValues.SetValues(item);
             await _context.SaveChangesAsync();
             return item;
         }
