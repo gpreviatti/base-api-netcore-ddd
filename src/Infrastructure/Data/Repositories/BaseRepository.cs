@@ -33,9 +33,9 @@ namespace Data.Repositories
             return item;
         }
 
-        public async Task<T> FindByIdAsync(Guid Guid)
+        public async Task<T> FindByIdAsync(Guid id)
         {
-            return await _dataset.SingleOrDefaultAsync(p => p.Id.Equals(Guid));
+            return await _dataset.SingleOrDefaultAsync(p => p.Id.Equals(id));
         }
 
         public async Task<IEnumerable<T>> FindAllAsync()
@@ -48,14 +48,14 @@ namespace Data.Repositories
             item.CreatedAt = item.CreatedAt;
             item.UpdatedAt = DateTime.Now;
 
-            _context.Entry(item).CurrentValues.SetValues(item);
+            _context.Entry<T>(item).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return item;
         }
 
-        public async Task<bool> DeleteAsync(Guid Id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
-            var result = await _dataset.SingleOrDefaultAsync(p => p.Id.Equals(Id));
+            var result = await _dataset.SingleOrDefaultAsync(p => p.Id.Equals(id));
             if (result == null)
             {
                 return false;

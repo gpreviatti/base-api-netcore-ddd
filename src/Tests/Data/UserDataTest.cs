@@ -1,9 +1,9 @@
 using System;
 using Xunit;
 
-namespace Tests.Services
+namespace Tests.Data
 {
-    public class UnitTest1
+    public class UserDataTest
     {
         [Fact]
         public void Test1()

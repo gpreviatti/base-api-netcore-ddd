@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class create_users : Migration
+    public partial class creste_users : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,7 +26,7 @@ namespace Data.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CreatedAt", "Email", "Name", "Password", "UpdatedAt" },
-                values: new object[] { new Guid("37e4f662-1987-4b9d-b245-ad6014f3217a"), new DateTime(2021, 4, 3, 12, 18, 5, 948, DateTimeKind.Local).AddTicks(7906), "admin@admin.com", "Admin", "$2a$11$3cw5mScRXUzYViR7yImcv.pHg7YIbKWYhbHHF1hQwONdX5XBve9Sa", new DateTime(2021, 4, 3, 12, 18, 5, 949, DateTimeKind.Local).AddTicks(9449) });
+                values: new object[] { new Guid("37e4f662-1987-4b9d-b245-ad6014f3217a"), new DateTime(2021, 4, 4, 10, 36, 36, 618, DateTimeKind.Local).AddTicks(4998), "admin@admin.com", "Admin", "$2a$11$Nj5Rq4K3uYDXQCaM1oECd./kplW8oOXI0aPx1R0sKGeiWuzTC1zqW", new DateTime(2021, 4, 4, 10, 36, 36, 619, DateTimeKind.Local).AddTicks(8705) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",

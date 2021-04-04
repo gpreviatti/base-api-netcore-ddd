@@ -9,6 +9,9 @@ namespace Data.Context
         {
             var optionsBuilder = new DbContextOptionsBuilder<MyContext>();
 
+            // In Memory
+            // optionsBuilder.UseInMemoryDatabase("Database");
+
             //MySql
             // var connectionString = "Server=localhost;Port=3306;Database=BaseApi;Uid=application;Pwd=application";
             // optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));

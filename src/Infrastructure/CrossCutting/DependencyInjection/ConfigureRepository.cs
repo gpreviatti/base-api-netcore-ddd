@@ -12,6 +12,8 @@ namespace CrossCutting.DependencyInjection
         {
             serviceCollection.AddScoped<IUserRepository, UserRepository>();
 
+            // In Memory
+            // serviceCollection.AddDbContext<MyContext>(opt => opt.UseInMemoryDatabase("Database"));
 
             // MySql
             // var connectionString = "Server=localhost;Port=3306;Database=dbAPI;Uid=application;Pwd=application";

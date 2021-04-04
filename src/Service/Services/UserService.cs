@@ -70,29 +70,19 @@ namespace Service.Services
         {
             try
             {
-                var result = await _repository.FindByIdAsync(userUpdateDto.Id);
-                if (result == null)
-                {
-                    return null;
-                }
+                // var result = await _repository.FindByIdAsync(userUpdateDto.Id);
 
-                if (userUpdateDto.Password == null)
-                {
-                    userUpdateDto.Password = result.Password;
-                }
-                else
-                {
-                    userUpdateDto.Password = EncryptHelper.HashField(userUpdateDto.Password);
-                }
-
-                if (userUpdateDto.Email == null)
-                {
-                    userUpdateDto.Email = result.Email;
-                }
+                // if (result == null)
+                // {
+                //     return null;   
+                // }
 
                 var user = _mapper.Map<User>(userUpdateDto);
-                var updatedUser = await _repository.UpdateAsync(user);
+
+                var updatedUser = _repository.UpdateAsync(user);
+
                 return _mapper.Map<UserResultDto>(updatedUser);
+
             }
             catch (Exception exception)
             {
