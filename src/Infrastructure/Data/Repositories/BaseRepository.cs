@@ -45,10 +45,17 @@ namespace Data.Repositories
 
         public async Task<T> UpdateAsync(T item)
         {
+            var result = await _dataset.SingleOrDefaultAsync(p => p.Id.Equals(item.Id));
+
+            if (result == null)
+            {
+                return null;
+            }
+
             item.CreatedAt = item.CreatedAt;
             item.UpdatedAt = DateTime.Now;
 
-            _context.Entry<T>(item).State = EntityState.Modified;
+            _context.Entry(result).CurrentValues.SetValues(item);
             await _context.SaveChangesAsync();
             return item;
         }
