@@ -33,15 +33,9 @@ namespace Data.Repositories
             return item;
         }
 
-        public async Task<T> FindByIdAsync(Guid id)
-        {
-            return await _dataset.SingleOrDefaultAsync(p => p.Id.Equals(id));
-        }
+        public async Task<T> FindByIdAsync(Guid id) => await _dataset.SingleOrDefaultAsync(p => p.Id.Equals(id));
 
-        public async Task<IEnumerable<T>> FindAllAsync()
-        {
-            return await _dataset.ToListAsync();
-        }
+        public async Task<IEnumerable<T>> FindAllAsync() => await _dataset.ToListAsync();
 
         public async Task<T> UpdateAsync(T item)
         {
@@ -72,5 +66,7 @@ namespace Data.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<int> SaveChangesAsync() => await _context.SaveChangesAsync();
     }
 }

@@ -12,5 +12,6 @@ namespace Domain.Interfaces.Repositories
         Task<bool> DeleteAsync(Guid Id);
         Task<T> FindByIdAsync(Guid Id);
         Task<IEnumerable<T>> FindAllAsync();
+        Task<int> SaveChangesAsync();
     }
 }

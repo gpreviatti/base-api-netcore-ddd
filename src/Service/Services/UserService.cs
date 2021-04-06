@@ -70,14 +70,20 @@ namespace Service.Services
         {
             try
             {
-                var user = _mapper.Map<User>(userUpdateDto);
+                var result = _repository.FindByIdAsync(userUpdateDto.Id).Result;
+                if (result == null)
+                {
+                    return null;
+                }
+
+                var user = _mapper.Map(userUpdateDto, result);
 
                 if (user.Password != null)
                 {
                     user.Password = EncryptHelper.HashField(user.Password);
                 }
 
-                var updatedUser = await _repository.UpdateAsync(user);
+                var updatedUser = await _repository.SaveChangesAsync();
 
                 return _mapper.Map<UserResultDto>(updatedUser);
 
