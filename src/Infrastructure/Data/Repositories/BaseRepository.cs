@@ -37,23 +37,6 @@ namespace Data.Repositories
 
         public async Task<IEnumerable<T>> FindAllAsync() => await _dataset.ToListAsync();
 
-        public async Task<T> UpdateAsync(T item)
-        {
-            var result = await _dataset.SingleOrDefaultAsync(p => p.Id.Equals(item.Id));
-
-            if (result == null)
-            {
-                return null;
-            }
-
-            item.CreatedAt = item.CreatedAt;
-            item.UpdatedAt = DateTime.Now;
-
-            _context.Entry(result).CurrentValues.SetValues(item);
-            await _context.SaveChangesAsync();
-            return item;
-        }
-
         public async Task<bool> DeleteAsync(Guid id)
         {
             var result = await _dataset.SingleOrDefaultAsync(p => p.Id.Equals(id));

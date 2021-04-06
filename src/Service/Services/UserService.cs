@@ -70,7 +70,13 @@ namespace Service.Services
         {
             try
             {
-                var result = _repository.FindByIdAsync(userUpdateDto.Id).Result;
+                if (userUpdateDto.Password != null)
+                {
+                    userUpdateDto.Password = EncryptHelper.HashField(userUpdateDto.Password);
+                }
+
+                var result = await _repository.FindByIdAsync(userUpdateDto.Id);
+
                 if (result == null)
                 {
                     return null;
@@ -78,14 +84,13 @@ namespace Service.Services
 
                 var user = _mapper.Map(userUpdateDto, result);
 
-                if (user.Password != null)
+                var savedChanges = await _repository.SaveChangesAsync();
+
+                if (savedChanges > 0)
                 {
-                    user.Password = EncryptHelper.HashField(user.Password);
+                    return _mapper.Map<UserResultDto>(user);
                 }
-
-                var updatedUser = await _repository.SaveChangesAsync();
-
-                return _mapper.Map<UserResultDto>(updatedUser);
+                return null;
 
             }
             catch (Exception exception)
