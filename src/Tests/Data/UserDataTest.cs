@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Data.Context;
 using Data.Repositories;
 using Domain.Entities;
@@ -39,6 +40,35 @@ namespace Tests.Data
             Assert.Equal(userTest.Email, result.Email);
             Assert.Equal(userTest.Name, result.Name);
             Assert.False(result.Id == Guid.Empty);
+        }
+
+        [Fact(DisplayName = "List Users")]
+        [Trait("Data", "ShouldListUser")]
+        public void ShouldListUser()
+        {
+            var result = _repository.FindAllAsync().Result;
+
+            if (result == null)
+            {
+                Assert.Null(result);
+            }
+            else
+            {
+                Assert.NotNull(result);
+            }
+        }
+
+        [Fact(DisplayName = "List User by Id")]
+        [Trait("Data", "ShouldListUserById")]
+        public void ShouldListUserById()
+        {
+            var result = _repository.FindByIdAsync(userTest.Id).Result;
+
+            Assert.NotNull(result);
+            Assert.IsType<User>(result);
+            Assert.Equal(userTest.Id, result.Id);
+            Assert.Equal(userTest.Name, result.Name);
+            Assert.Equal(userTest.Email, result.Email);
         }
 
         [Fact(DisplayName = "Update User")]
