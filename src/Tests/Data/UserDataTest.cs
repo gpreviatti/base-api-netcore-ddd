@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Data.Context;
 using Data.Repositories;
 using Domain.Entities;
@@ -13,13 +14,14 @@ namespace Tests.Data
     {
         private readonly IUserRepository _repository;
 
-        private User userTest;
-
         public UserDataTest()
         {
             _repository = new UserRepository(_context);
+        }
 
-            userTest = new User()
+        private async Task<User> createUser()
+        {
+            var userTest = new User()
             {
                 Id = new Guid(),
                 Name = Faker.Name.FullName(),
@@ -28,13 +30,24 @@ namespace Tests.Data
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
             };
+            return await _repository.CreateAsync(userTest);
         }
 
         [Fact(DisplayName = "Create User")]
         [Trait("Data", "ShouldCreateUser")]
-        public void ShouldCreateUser()
+        public async void ShouldCreateUser()
         {
-            var result = _repository.CreateAsync(userTest).Result;
+            var userTest = new User()
+            {
+                Id = new Guid(),
+                Name = Faker.Name.FullName(),
+                Email = Faker.Internet.Email(),
+                Password = "12345678",
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
+
+            var result = await _repository.CreateAsync(userTest);
 
             Assert.NotNull(result);
             Assert.Equal(userTest.Email, result.Email);
@@ -44,24 +57,19 @@ namespace Tests.Data
 
         [Fact(DisplayName = "List Users")]
         [Trait("Data", "ShouldListUser")]
-        public void ShouldListUser()
+        public async void ShouldListUser()
         {
+            await createUser();
             var result = _repository.FindAllAsync().Result;
 
-            if (result == null)
-            {
-                Assert.Null(result);
-            }
-            else
-            {
-                Assert.NotNull(result);
-            }
+            Assert.NotNull(result);
         }
 
         [Fact(DisplayName = "List User by Id")]
         [Trait("Data", "ShouldListUserById")]
-        public void ShouldListUserById()
+        public async void ShouldListUserById()
         {
+            var userTest = await createUser();
             var result = _repository.FindByIdAsync(userTest.Id).Result;
 
             Assert.NotNull(result);
@@ -73,24 +81,24 @@ namespace Tests.Data
 
         [Fact(DisplayName = "Update User")]
         [Trait("Data", "ShouldUpdateUser")]
-        public void ShouldUpdateUser()
+        public async void ShouldUpdateUser()
         {
+            var userTest = await createUser();
             userTest.Name = Faker.Name.FullName();
             userTest.Email = Faker.Internet.Email();
-            var result = _repository.SaveChangesAsync().Result;
+            var result = await _repository.SaveChangesAsync();
 
-            Assert.NotNull(result);
             Assert.Equal(1, result);
         }
 
         [Fact(DisplayName = "Delete User")]
         [Trait("Data", "ShouldDeleteUser")]
-        public void ShouldDeleteUser()
+        public async void ShouldDeleteUser()
         {
-            var result = _repository.DeleteAsync(userTest.Id).Result;
+            var userTest = await createUser();
+            var result = await _repository.DeleteAsync(userTest.Id);
 
-            Assert.NotNull(result);
-            Assert.Equal(true, result);
+            Assert.True(result);
         }
     }
 }
