@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Tests.Data
 {
-    public class BaseDataTest
+    public abstract class BaseDataTest
     {
         private string dataBaseName = $"TestDb_{Guid.NewGuid().ToString().Replace("-", string.Empty)}";
         protected readonly IServiceProvider _serviceProvider;
