@@ -57,11 +57,20 @@ namespace Data.Migrations
                         new
                         {
                             Id = new Guid("37e4f662-1987-4b9d-b245-ad6014f3217a"),
-                            CreatedAt = new DateTime(2021, 4, 4, 10, 36, 36, 618, DateTimeKind.Local).AddTicks(4998),
+                            CreatedAt = new DateTime(2021, 4, 11, 10, 34, 50, 795, DateTimeKind.Local).AddTicks(2481),
                             Email = "admin@admin.com",
                             Name = "Admin",
-                            Password = "$2a$11$Nj5Rq4K3uYDXQCaM1oECd./kplW8oOXI0aPx1R0sKGeiWuzTC1zqW",
-                            UpdatedAt = new DateTime(2021, 4, 4, 10, 36, 36, 619, DateTimeKind.Local).AddTicks(8705)
+                            Password = "$2a$11$x/mNDOsFXIO5ow/0XGkQ8OaSmNtrqBvE/HSHW7KMYw/iai8qiTuda",
+                            UpdatedAt = new DateTime(2021, 4, 11, 10, 34, 50, 797, DateTimeKind.Local).AddTicks(2146)
+                        },
+                        new
+                        {
+                            Id = new Guid("6823c5ae-ca43-4287-82e1-10d5fca46a2e"),
+                            CreatedAt = new DateTime(2021, 4, 11, 10, 34, 51, 88, DateTimeKind.Local).AddTicks(3142),
+                            Email = "testUser01@email.com",
+                            Name = "Test-User-01",
+                            Password = "$2a$11$wAphH2ntzKu2SYorng/RPOeFkwWzfyYNpBIX.iOOMHX6E19NNuGom",
+                            UpdatedAt = new DateTime(2021, 4, 11, 10, 34, 51, 88, DateTimeKind.Local).AddTicks(3182)
                         });
                 });
 #pragma warning restore 612, 618

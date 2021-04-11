@@ -13,9 +13,8 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "DB_CONNECTION": "Persist Security Info=True;Server=DESKTOP-CJHGFFK;Database=BaseApi;User Id=application;Password=application",
+        "DB_CONNECTION": "Server=DESKTOP-CJHGFFK;Database=BaseApi;User Id=application;Password=application",
         "Seconds": "28800",
-        "DATABASE": "MSSQL",
         "Issuer": "IssueExample",
         "Audience": "AudienceExample",
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -25,9 +24,8 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "DB_CONNECTION": "Persist Security Info=True;Server=DESKTOP-CJHGFFK;Database=BaseApi;User Id=application;Password=application",
+        "DB_CONNECTION": "Server=DESKTOP-CJHGFFK;Database=BaseApi;User Id=application;Password=application",
         "Seconds": "28800",
-        "DATABASE": "MSSQL",
         "Issuer": "IssueExample",
         "Audience": "AudienceExample",
         "ASPNETCORE_ENVIRONMENT": "Development"

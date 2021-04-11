@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class creste_users : Migration
+    public partial class create_users : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,7 +26,12 @@ namespace Data.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CreatedAt", "Email", "Name", "Password", "UpdatedAt" },
-                values: new object[] { new Guid("37e4f662-1987-4b9d-b245-ad6014f3217a"), new DateTime(2021, 4, 4, 10, 36, 36, 618, DateTimeKind.Local).AddTicks(4998), "admin@admin.com", "Admin", "$2a$11$Nj5Rq4K3uYDXQCaM1oECd./kplW8oOXI0aPx1R0sKGeiWuzTC1zqW", new DateTime(2021, 4, 4, 10, 36, 36, 619, DateTimeKind.Local).AddTicks(8705) });
+                values: new object[] { new Guid("37e4f662-1987-4b9d-b245-ad6014f3217a"), new DateTime(2021, 4, 11, 10, 34, 50, 795, DateTimeKind.Local).AddTicks(2481), "admin@admin.com", "Admin", "$2a$11$x/mNDOsFXIO5ow/0XGkQ8OaSmNtrqBvE/HSHW7KMYw/iai8qiTuda", new DateTime(2021, 4, 11, 10, 34, 50, 797, DateTimeKind.Local).AddTicks(2146) });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "CreatedAt", "Email", "Name", "Password", "UpdatedAt" },
+                values: new object[] { new Guid("6823c5ae-ca43-4287-82e1-10d5fca46a2e"), new DateTime(2021, 4, 11, 10, 34, 51, 88, DateTimeKind.Local).AddTicks(3142), "testUser01@email.com", "Test-User-01", "$2a$11$wAphH2ntzKu2SYorng/RPOeFkwWzfyYNpBIX.iOOMHX6E19NNuGom", new DateTime(2021, 4, 11, 10, 34, 51, 88, DateTimeKind.Local).AddTicks(3182) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",

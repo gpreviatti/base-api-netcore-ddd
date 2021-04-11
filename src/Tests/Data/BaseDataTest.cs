@@ -7,7 +7,6 @@ namespace Tests.Data
 {
     public abstract class BaseDataTest
     {
-        private string dataBaseName = $"TestDb_{Guid.NewGuid().ToString().Replace("-", string.Empty)}";
         protected readonly IServiceProvider _serviceProvider;
         protected readonly MyContext _context;
 
@@ -17,11 +16,12 @@ namespace Tests.Data
 
             // In Memory
             serviceCollection.AddDbContext<MyContext>(
-                options => options.UseSqlServer($"Server=(localdb)\\mssqllocaldb;Integrated Security=true;Initial Catalog=Microsoft.eShopOnWeb.Identity;")
+                options => options.UseSqlServer($"Server=(localdb)\\mssqllocaldb;Integrated Security=true;Initial Catalog=testDB")
             );
 
             _serviceProvider = serviceCollection.BuildServiceProvider();
             _context = _serviceProvider.GetService<MyContext>();
+            _context.Database.EnsureCreated();
         }
     }
 }

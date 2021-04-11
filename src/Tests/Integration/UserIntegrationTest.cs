@@ -39,8 +39,6 @@ namespace Tests.Integration
             // Assumption
             await AdicionarToken();
             var response = await GetAsync("users");
-            var getResult = await response.Content.ReadAsStringAsync();
-            var users = JsonConvert.DeserializeObject<IEnumerable<UserResultDto>>(getResult);
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);

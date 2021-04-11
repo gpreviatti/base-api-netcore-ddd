@@ -92,6 +92,7 @@ namespace Tests.Integration
         }
 
         public static async Task<HttpResponseMessage> DeleteAsync(string url) => await _client.DeleteAsync(_hostApi + url);
+
         #endregion
     }
 }
