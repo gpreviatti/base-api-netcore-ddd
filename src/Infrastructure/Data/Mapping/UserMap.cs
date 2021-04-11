@@ -12,6 +12,9 @@ namespace Data.Mapping
 
             builder.HasKey(u => u.Id);
 
+            builder.Property(u => u.Id)
+                .HasMaxLength(36);
+
             builder.Property(u => u.Name)
                 .IsRequired()
                 .HasMaxLength(60);

@@ -3,6 +3,8 @@ using Data.Repositories;
 using Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Pomelo.EntityFrameworkCore.MySql.Storage;
+using System;
 
 namespace CrossCutting.DependencyInjection
 {
@@ -13,16 +15,13 @@ namespace CrossCutting.DependencyInjection
             serviceCollection.AddScoped<IUserRepository, UserRepository>();
 
 
+            var dbConnection = Environment.GetEnvironmentVariable("DB_CONNECTION");
+
             // MySql
-            var connectionString = "Server=localhost;Port=3306;Database=dbAPI;Uid=application;Pwd=application";
-            serviceCollection.AddDbContext<MyContext>(
-                options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
-            );
+            //serviceCollection.AddDbContext<MyContext>(options => options.UseMySql(dbConnection, ServerVersion.AutoDetect(dbConnection)));
 
             // SqlServer
-            // serviceCollection.AddDbContext<MyContext>(
-            //     options => options.UseSqlServer("Server=.\\SQLEXPRESS2017;Database=dbAPI;User Id=sa;Password=mudar@123")
-            // );
+            serviceCollection.AddDbContext<MyContext>(options => options.UseSqlServer(dbConnection));
         }
     }
 }

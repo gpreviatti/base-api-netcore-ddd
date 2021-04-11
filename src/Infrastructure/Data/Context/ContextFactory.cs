@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using System;
 
 namespace Data.Context
 {
@@ -8,14 +9,13 @@ namespace Data.Context
         public MyContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<MyContext>();
+            var dbConnection = Environment.GetEnvironmentVariable("DB_CONNECTION");
 
             //MySql
-            var connectionString = "Server=localhost;Port=3306;Database=dbAPI;Uid=application;Pwd=application";
-            optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            // optionsBuilder.UseMySql(dbConnection, ServerVersion.AutoDetect(dbConnection));
 
             //SQLServer
-            // var connectionString = "Server=.\\SQLEXPRESS2017;Database=dbAPI;User Id=sa;Password=mudar@123";
-            // optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseSqlServer(dbConnection);
 
             return new MyContext(optionsBuilder.Options);
         }

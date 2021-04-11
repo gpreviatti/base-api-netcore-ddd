@@ -1,3 +1,4 @@
+using System;
 using CrossCutting.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,16 +10,28 @@ namespace Application
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment _environment { get; }
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
+        {
+            Configuration = configuration;
+            _environment = environment;
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            if (_environment.IsEnvironment("Testing"))
+            {
+                Environment.SetEnvironmentVariable("DB_CONNECTION", "Server=(localdb)\\mssqllocaldb;Integrated Security=true;");
+                Environment.SetEnvironmentVariable("DATABASE", "LOCALDB");
+                Environment.SetEnvironmentVariable("Audience", "AudienceExample");
+                Environment.SetEnvironmentVariable("Issuer", "IssueExample");
+                Environment.SetEnvironmentVariable("Seconds", "28800");
+            }
+
             ConfigureService.ConfigureDependenciesService(services);
             ConfigureRepository.ConfigureDependenciesRepository(services);
             ConfigureAutoMapper.ConfigureDepencenciesAutoMapper(services);
@@ -37,7 +50,13 @@ namespace Application
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Application v1"));
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Application v1");
+
+                    // Define Swagger as a default page of API
+                    c.RoutePrefix = String.Empty;
+                });
             }
 
             app.UseHttpsRedirection();

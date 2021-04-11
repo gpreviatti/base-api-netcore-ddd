@@ -2,7 +2,7 @@
 
 namespace Application.Controllers
 {
-    public class DefaultController : ControllerBase
+    public abstract class DefaultController : ControllerBase
     {
         public DefaultController()
         {

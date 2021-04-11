@@ -21,17 +21,17 @@ namespace Service.Services
             _mapper = mapper;
         }
 
-        public async Task<UserResultDto> FindByIdAsync(Guid id)
+        public async Task<UserResultDto> FindByIdAsync(Guid Id)
         {
             try
             {
-                var result = await _repository.FindByIdAsync(id);
+                var result = await _repository.FindByIdAsync(Id);
                 return _mapper.Map<UserResultDto>(result);
             }
             catch (Exception exception)
             {
                 System.Console.WriteLine(exception);
-                return new UserResultDto();
+                return null;
             }
         }
 
@@ -45,7 +45,7 @@ namespace Service.Services
             catch (Exception exception)
             {
                 System.Console.WriteLine(exception);
-                return new List<UserResultDto>();
+                return null;
             }
         }
 
@@ -62,7 +62,7 @@ namespace Service.Services
             catch (Exception exception)
             {
                 System.Console.WriteLine(exception);
-                return new UserResultDto();
+                return null;
             }
         }
 
@@ -70,23 +70,41 @@ namespace Service.Services
         {
             try
             {
-                var user = _mapper.Map<User>(userUpdateDto);
+                if (userUpdateDto.Password != null)
+                {
+                    userUpdateDto.Password = EncryptHelper.HashField(userUpdateDto.Password);
+                }
 
-                var updatedUser = await _repository.UpdateAsync(user);
-                return _mapper.Map<UserResultDto>(updatedUser);
+                var result = await _repository.FindByIdAsync(userUpdateDto.Id);
+
+                if (result == null)
+                {
+                    return null;
+                }
+
+                var user = _mapper.Map(userUpdateDto, result);
+
+                var savedChanges = await _repository.SaveChangesAsync();
+
+                if (savedChanges > 0)
+                {
+                    return _mapper.Map<UserResultDto>(user);
+                }
+                return null;
+
             }
             catch (Exception exception)
             {
                 System.Console.WriteLine(exception);
-                return new UserResultDto();
+                return null;
             }
         }
 
-        public async Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid Id)
         {
             try
             {
-                return await _repository.DeleteAsync(id);
+                return await _repository.DeleteAsync(Id);
             }
             catch (Exception exception)
             {

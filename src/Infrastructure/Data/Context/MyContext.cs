@@ -1,4 +1,5 @@
 using Data.Mapping;
+using Data.Seeds;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +20,9 @@ namespace Data.Context
 
             // Add your entities below
             modelBuilder.Entity<User>(new UserMap().Configure);
+
+            // Add your seeders below
+            UserSeeder.Users(modelBuilder);
         }
     }
 }
