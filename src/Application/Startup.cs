@@ -10,16 +10,29 @@ namespace Application
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment _environment { get; }
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
+        {
+            Configuration = configuration;
+            _environment = environment;
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            if (_environment.IsEnvironment("Testing"))
+            {
+                Environment.SetEnvironmentVariable("DB_CONNECTION", "Persist Security Info=True;Server=(localdb)\\mssqllocaldb;Integrated Security=true;Initial Catalog=Microsoft.eShopOnWeb.Identity;");
+                Environment.SetEnvironmentVariable("DATABASE", "MSSQLSERVER");
+                Environment.SetEnvironmentVariable("MIGRATION", "APPLY");
+                Environment.SetEnvironmentVariable("Audience", "AudienceExample");
+                Environment.SetEnvironmentVariable("Issuer", "IssueExample");
+                Environment.SetEnvironmentVariable("Seconds", "28800");
+            }
+
             ConfigureService.ConfigureDependenciesService(services);
             ConfigureRepository.ConfigureDependenciesRepository(services);
             ConfigureAutoMapper.ConfigureDepencenciesAutoMapper(services);

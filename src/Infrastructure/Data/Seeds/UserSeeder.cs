@@ -20,6 +20,14 @@ namespace Data.Seeds
                         Password = EncryptHelper.HashField("mudar@123"),
                         CreatedAt = DateTime.Now,
                         UpdatedAt = DateTime.Now
+                    },
+                    new User() {
+                        Id = new Guid("6823c5ae-ca43-4287-82e1-10d5fca46a2e"),
+                        Name = "Test-User-01",
+                        Email = "testUser01@email.com",
+                        Password = EncryptHelper.HashField("mudar@123"),
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
                     }
                 }
             );
