@@ -20,6 +20,6 @@ jobs:
 
     - name: Build with dotnet
       run: dotnet build ./base-api-netcore-ddd.sln --configuration Release
-    
+  tests:
     - name: Test with dotnet
       run: dotnet test ./base-api-netcore-ddd.sln --configuration Release
