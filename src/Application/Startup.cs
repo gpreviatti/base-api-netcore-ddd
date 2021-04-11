@@ -25,9 +25,8 @@ namespace Application
         {
             if (_environment.IsEnvironment("Testing"))
             {
-                Environment.SetEnvironmentVariable("DB_CONNECTION", "Persist Security Info=True;Server=(localdb)\\mssqllocaldb;Integrated Security=true;Initial Catalog=Microsoft.eShopOnWeb.Identity;");
+                Environment.SetEnvironmentVariable("DB_CONNECTION", "Server=(localdb)\\mssqllocaldb;Integrated Security=true;");
                 Environment.SetEnvironmentVariable("DATABASE", "MSSQLSERVER");
-                Environment.SetEnvironmentVariable("MIGRATION", "APPLY");
                 Environment.SetEnvironmentVariable("Audience", "AudienceExample");
                 Environment.SetEnvironmentVariable("Issuer", "IssueExample");
                 Environment.SetEnvironmentVariable("Seconds", "28800");

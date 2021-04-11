@@ -20,13 +20,7 @@
                 "pattern": "\\\\bNow listening on:\\\\s+(https?://\\\\S+)"
             },
             "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development",
-                "DB_CONNECTION": "Persist Security Info=True;Server=DESKTOP-CJHGFFK;Database=BaseApi;User Id=application;Password=application",
-                "DATABASE": "MSSQL",
-                "MIGRATION": "APLICAR",
-                "Audience": "ExemploAudience",
-                "Issuer": "ExemploIssue",
-                "Seconds": "28800"
+                "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"
