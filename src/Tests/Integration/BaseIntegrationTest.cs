@@ -35,7 +35,7 @@ namespace Tests.Integration
 
             var server = new TestServer(builder);
 
-            _myContext = server.Host.Services.GetService(typeof(MyContext)) as MyContext;
+            _myContext = (MyContext) server.Host.Services.GetService(typeof(MyContext));
             _myContext.Database.Migrate();
 
             _mapper = GetMapper();

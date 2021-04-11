@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Domain.Dtos.User;
 using Newtonsoft.Json;
 using Xunit;
@@ -64,7 +61,7 @@ namespace Tests.Integration
             // Arrange
             var userUpdateDto = new UserUpdateDto()
             {
-                Id = "6823c5ae-ca43-4287-82e1-10d5fca46a2e",
+                Id = new Guid("6823c5ae-ca43-4287-82e1-10d5fca46a2e"),
                 Name = Faker.Name.First()
             };
 
@@ -75,8 +72,8 @@ namespace Tests.Integration
             var updatedUser = JsonConvert.DeserializeObject<UserResultDto>(putResult);
 
             // Assert
-            Assert.Equal(HttpStatusCode.Created, response.StatusCode);
-            Assert.Equal(userCreateDto.Name, updatedUser.Name);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(userUpdateDto.Name, updatedUser.Name);
             Assert.True(updatedUser.Id != default(Guid));
         }
 
@@ -92,7 +89,7 @@ namespace Tests.Integration
             var response = await DeleteAsync("users/" + guid);
 
             // Assert
-            Assert.Equal(HttpStatusCode.Ok, response.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
     }
 }
