@@ -34,7 +34,7 @@ namespace Tests.Data
         }
 
         [Fact(DisplayName = "Create User")]
-        [Trait("Data", "ShouldCreateUser")]
+        [Trait("Crud", "ShouldCreateUser")]
         public async void ShouldCreateUser()
         {
             var userTest = new User()
@@ -56,7 +56,7 @@ namespace Tests.Data
         }
 
         [Fact(DisplayName = "List Users")]
-        [Trait("Data", "ShouldListUser")]
+        [Trait("Crud", "ShouldListUser")]
         public async void ShouldListUser()
         {
             await createUser();
@@ -66,7 +66,7 @@ namespace Tests.Data
         }
 
         [Fact(DisplayName = "List User by Id")]
-        [Trait("Data", "ShouldListUserById")]
+        [Trait("Crud", "ShouldListUserById")]
         public async void ShouldListUserById()
         {
             var userTest = await createUser();
@@ -80,7 +80,7 @@ namespace Tests.Data
         }
 
         [Fact(DisplayName = "Update User")]
-        [Trait("Data", "ShouldUpdateUser")]
+        [Trait("Crud", "ShouldUpdateUser")]
         public async void ShouldUpdateUser()
         {
             var userTest = await createUser();
@@ -92,7 +92,7 @@ namespace Tests.Data
         }
 
         [Fact(DisplayName = "Delete User")]
-        [Trait("Data", "ShouldDeleteUser")]
+        [Trait("Crud", "ShouldDeleteUser")]
         public async void ShouldDeleteUser()
         {
             var userTest = await createUser();

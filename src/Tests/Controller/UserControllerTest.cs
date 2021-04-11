@@ -21,7 +21,7 @@ namespace Tests.Controller
         }
 
         [Fact(DisplayName = "Should list users")]
-        [Trait("Controller", "ShouldListUser")]
+        [Trait("Crud", "ShouldListUser")]
         public async void ShouldListUsers()
         {
             // Arrange
@@ -55,7 +55,7 @@ namespace Tests.Controller
         }
 
         [Fact(DisplayName = "Should NOT list users")]
-        [Trait("Controller", "ShouldNotListUsers")]
+        [Trait("Crud", "ShouldNotListUsers")]
         public async void ShouldNotListUsers()
         {
             // Arrange
@@ -75,7 +75,7 @@ namespace Tests.Controller
         }
 
         [Fact(DisplayName = "Should create user")]
-        [Trait("Controller", "ShouldCreateUser")]
+        [Trait("Crud", "ShouldCreateUser")]
         public async void ShouldCreateUser()
         {
             // Arrange
@@ -111,7 +111,7 @@ namespace Tests.Controller
         }
 
         [Fact(DisplayName = "Should update user")]
-        [Trait("Controller", "ShouldUpdateUser")]
+        [Trait("Crud", "ShouldUpdateUser")]
         public async void ShouldUpdateUser()
         {
             // Arrange
@@ -148,7 +148,7 @@ namespace Tests.Controller
         }
 
         [Fact(DisplayName = "Should NOT update user")]
-        [Trait("Controller", "ShouldNotUpdateUser")]
+        [Trait("Crud", "ShouldNotUpdateUser")]
         public async void ShouldNotUpdateUser()
         {
             // Arrange
@@ -168,7 +168,7 @@ namespace Tests.Controller
         }
 
         [Fact(DisplayName = "Should delete user")]
-        [Trait("Controller", "ShouldDeleteUser")]
+        [Trait("Crud", "ShouldDeleteUser")]
         public async void ShouldDeleteUser()
         {
             // Arrange
@@ -188,7 +188,7 @@ namespace Tests.Controller
         }
 
         [Fact(DisplayName = "Should NOT delete user")]
-        [Trait("Controller", "ShouldNotDeleteUser")]
+        [Trait("Crud", "ShouldNotDeleteUser")]
         public async void ShouldNotDeleteUser()
         {
             // Arrange

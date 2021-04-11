@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using Domain.Dtos.User;
+using Domain.Entities;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -13,8 +15,23 @@ namespace Tests.Integration
         {
         }
 
+        public async Task<UserResultDto> CreateUser()
+        {
+            var userCreateDto = new UserCreateDto()
+            {
+                Name = Faker.Name.First(),
+                Email = Faker.Internet.Email(),
+                Password = "mudar@123"
+            };
+
+            await AdicionarToken();
+            var response = await PostAsync(userCreateDto, "users");
+            var postResult = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<UserResultDto>(postResult);
+        }
+
         [Fact]
-        [Trait("Integration", "ShouldListUser")]
+        [Trait("Crud", "ShouldListUser")]
         public async void ShouldListUser()
         {
             // Arrange
@@ -30,7 +47,7 @@ namespace Tests.Integration
         }
 
         [Fact]
-        [Trait("Integration", "ShouldCreateUser")]
+        [Trait("Crud", "ShouldCreateUser")]
         public async void ShouldCreateUser()
         {
             // Arrange
@@ -55,14 +72,31 @@ namespace Tests.Integration
         }
 
         [Fact]
-        [Trait("Integration", "ShouldUpdateUser")]
+        [Trait("Crud", "ShouldNotCreateUser")]
+        public async void ShouldNotCreateUser()
+        {
+            // Arrange
+            var userCreateDto = new UserCreateDto() {Name = Faker.Name.First()};
+
+            // Assumption
+            await AdicionarToken();
+            var response = await PostAsync(userCreateDto, "users");
+            var postResult = await response.Content.ReadAsStringAsync();
+
+            // Assert
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        [Trait("Crud", "ShouldUpdateUser")]
         public async void ShouldUpdateUser()
         {
             // Arrange
+            var user = CreateUser().Result;
             var userUpdateDto = new UserUpdateDto()
             {
-                Id = new Guid("6823c5ae-ca43-4287-82e1-10d5fca46a2e"),
-                Name = Faker.Name.First()
+                Id = user.Id,
+                Name = Faker.Name.FullName()
             };
 
             // Assumption
@@ -78,18 +112,51 @@ namespace Tests.Integration
         }
 
         [Fact]
-        [Trait("Integration", "ShouldDeleteUser")]
+        [Trait("Crud", "ShouldNotUpdateUser")]
+        public async void ShouldNotUpdateUser()
+        {
+            // Arrange
+            var userUpdateDto = new UserUpdateDto() {Name = Faker.Name.FullName()};
+
+            // Assumption
+            await AdicionarToken();
+            var response = await PutAsync(userUpdateDto, "users");
+            var putResult = await response.Content.ReadAsStringAsync();
+
+            // Assert
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        [Trait("Crud", "ShouldDeleteUser")]
         public async void ShouldDeleteUser()
         {
             // Arrange
-            var guid = "6823c5ae-ca43-4287-82e1-10d5fca46a2e";
+            var user = CreateUser().Result;
+
+            // Assumption
+            await AdicionarToken();
+            var response = await DeleteAsync("users/" + user.Id);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
+        [Trait("Crud", "ShouldNotDeleteUser")]
+        public async void ShouldNotDeleteUser()
+        {
+            // Arrange
+            var guid = new Guid();
 
             // Assumption
             await AdicionarToken();
             var response = await DeleteAsync("users/" + guid);
+            var responseWithoutGuid = await DeleteAsync("users/");
 
             // Assert
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.Equal(HttpStatusCode.MethodNotAllowed, responseWithoutGuid.StatusCode);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Application
             if (_environment.IsEnvironment("Testing"))
             {
                 Environment.SetEnvironmentVariable("DB_CONNECTION", "Server=(localdb)\\mssqllocaldb;Integrated Security=true;");
-                Environment.SetEnvironmentVariable("DATABASE", "MSSQLSERVER");
+                Environment.SetEnvironmentVariable("DATABASE", "LOCALDB");
                 Environment.SetEnvironmentVariable("Audience", "AudienceExample");
                 Environment.SetEnvironmentVariable("Issuer", "IssueExample");
                 Environment.SetEnvironmentVariable("Seconds", "28800");
