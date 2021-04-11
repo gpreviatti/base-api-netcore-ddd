@@ -18,10 +18,10 @@ jobs:
       with:
         dotnet-version: '5.0.x'
 
-    - name: Build with dotnet
+    - name: Build
       run: dotnet build ./base-api-netcore-ddd.sln --configuration Release
 
-    - name: Test with dotnet
+    - name: Tests
       run: dotnet test --filter AutoMapper ./base-api-netcore-ddd.sln --configuration Release &&
            dotnet test --filter Controller ./base-api-netcore-ddd.sln --configuration Release &&
            dotnet test --filter Service ./base-api-netcore-ddd.sln --configuration Release
