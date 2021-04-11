@@ -22,5 +22,5 @@ jobs:
       run: dotnet build ./base-api-netcore-ddd.sln --configuration Release
 
     - name: Test with dotnet
-      run: dotnet test --filter AutoMapper||Controller||Service ./base-api-netcore-ddd.sln --configuration Release
+      run: dotnet test --filter (AutoMapper)|(Controller)|(Service) ./base-api-netcore-ddd.sln --configuration Release
       
