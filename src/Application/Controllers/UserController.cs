@@ -4,28 +4,25 @@ using Domain.Dtos.User;
 using Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Controllers
 {
     [ApiController]
     [Authorize("Bearer")]
     [Route("users")]
-    public class UserController : DefaultController
+    public class UserController : DefaultController<UserController>
     {
         IUserService _service;
 
-        public UserController(IUserService service)
-        {
-            _service = service;
-        }
+        public UserController(IServiceProvider serviceProvider, ILogger<UserController> logger) :
+            base(serviceProvider, logger) => _service = GetService<IUserService>();
 
         [HttpGet]
         public async Task<ActionResult> Get()
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             return Ok(await _service.FindAllAsync());
         }
@@ -34,15 +31,11 @@ namespace Application.Controllers
         public async Task<ActionResult> Post([FromBody] UserCreateDto userCreateDto)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             var result = await _service.CreateAsync(userCreateDto);
             if (result == null)
-            {
-                return BadRequest("Fail to create User");   
-            }
+                return BadRequest("Fail to create User");
 
             return Created("/users", result);
         }
@@ -51,16 +44,12 @@ namespace Application.Controllers
         public async Task<ActionResult> Put([FromBody] UserUpdateDto userUpdateDto)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             var result = await _service.UpdateAsync(userUpdateDto);
 
             if (result == null)
-            {
                 return BadRequest("Fail to update User");
-            }
 
             return Ok(result);
         }
@@ -69,15 +58,11 @@ namespace Application.Controllers
         public async Task<ActionResult> Delete(Guid Id)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             var result = await _service.DeleteAsync(Id);
             if (result == false)
-            {
                 return BadRequest("Fail to delete User");
-            }
 
             return Ok("User deleted with success");
         }

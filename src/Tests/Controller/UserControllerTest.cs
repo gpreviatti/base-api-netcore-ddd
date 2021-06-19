@@ -7,6 +7,7 @@ using Application.Controllers;
 using Domain.Dtos.User;
 using Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 
@@ -15,9 +16,14 @@ namespace Tests.Controller
     public class UserControllerTest
     {
         private UserController _controller;
+        private Mock<IServiceProvider> _serviceProvider;
+        private Mock<ILogger> _logger;
 
         public UserControllerTest()
         {
+            _serviceProvider = new Mock<IServiceProvider>();
+            _logger = new Mock<ILogger>();
+            _controller = new UserController(_serviceProvider.Object, _logger.Object);
         }
 
         [Fact(DisplayName = "Should list users")]
@@ -43,7 +49,7 @@ namespace Tests.Controller
             // Action
             serviceMock.Setup(m => m.FindAllAsync()).ReturnsAsync(users);
 
-            _controller = new UserController(serviceMock.Object);
+            _controller = new UserController(serviceMock.Object, _logger.Object);
 
             var result = await _controller.Get();
             var resultValues = (IEnumerable<UserResultDto>)((OkObjectResult)result).Value;
